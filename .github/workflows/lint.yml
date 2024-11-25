@@ -20,5 +20,13 @@ jobs:
         run: bundle exec rubocop
       - name: print linting outcome
         if: always()
-        run: echo ${{ steps.lint.outcome }}
+        run: |
+          result=$(${{ steps.lint.outcome }} == "success")
+          if [ "$result"="true" ]; then
+            echo "Linting successful."
+            exit 0
+          else
+            echo "Linting failed."
+            exit 1
+          fi
     
