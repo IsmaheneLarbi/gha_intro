@@ -19,13 +19,15 @@ jobs:
         id: lint
         run: bundle exec rubocop
       - name: print linting outcome
-        if: always()
+        if: '!cancelled()'
         run: |
-          if [ ${{ steps.lint.outcome }} ]; then
-            echo "Linting successful."
-            exit 0
-          else
-            echo "Linting failed."
-            exit 1
-          fi
+          echo $(${{ steps.lint.outcome == success)
+          
+          # if [ ${{ steps.lint.outcome }} ]; then
+          #   echo "Linting successful."
+          #   exit 0
+          # else
+          #   echo "Linting failed."
+          #   exit 1
+          # fi
     
