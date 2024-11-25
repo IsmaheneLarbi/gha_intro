@@ -16,6 +16,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Run rubocop
-        run: echo ${{ steps }}
         run: bundle exec rubocop
+      - name: print steps
+        run: echo ${{ steps }}
     
