@@ -9,10 +9,10 @@ jobs:
   lint_check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: echo ${{ github.workspace }}
       - run: echo ${{ github.repository }}
-      - run: echo ${{ github.action }}
       - run: echo ${{ github.actor }}
-      - uses: actions/setup-ruby@v1
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
     
