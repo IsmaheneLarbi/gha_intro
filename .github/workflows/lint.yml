@@ -1,1 +1,6 @@
 name: Lint Check
+
+on:
+  push:
+    branches:
+      - main
