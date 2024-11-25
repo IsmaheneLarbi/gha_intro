@@ -21,8 +21,7 @@ jobs:
       - name: print linting outcome
         if: always()
         run: |
-          result=$(${{ steps.lint.outcome }} == "success")
-          if [ "$result"="true" ]; then
+          if [ ${{ steps.lint.outcome }} ]; then
             echo "Linting successful."
             exit 0
           else
