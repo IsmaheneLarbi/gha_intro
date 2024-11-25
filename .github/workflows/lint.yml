@@ -21,13 +21,7 @@ jobs:
       - name: print linting outcome
         if: '!cancelled()'
         run: |
-          result=${{ (steps.lint.outcome) }}
-          if [ $result="success" ]; then
-            echo "Linting successful."
-            exit 0
-          else
-            echo "Ling failed."
-            exit 1
-          fi
+          result=${{ steps.lint.outcome }} == "success"
+          echo $result
           
           
