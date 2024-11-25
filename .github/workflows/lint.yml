@@ -21,5 +21,5 @@ jobs:
       - name: print linting outcome
         if: '!cancelled()'
         run: |
-          echo ${{ toJson(steps.lint) }}
+          echo ${{ (steps.lint.outcome) }}
           
