@@ -21,14 +21,5 @@ jobs:
       - name: print linting outcome
         if: '!cancelled()'
         run: |
-          # result=${{ steps.lint.outcome }}
           echo ${{ toJson(steps.lint) }}
           
-          # if [ ${{ steps.lint.outcome }} ]; then
-          #   echo "Linting successful."
-          #   exit 0
-          # else
-          #   echo "Linting failed."
-          #   exit 1
-          # fi
-    
