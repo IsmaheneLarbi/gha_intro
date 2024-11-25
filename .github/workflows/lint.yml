@@ -16,7 +16,9 @@ jobs:
         with:
           bundler-cache: true
       - name: Run rubocop
+        id: lint
         run: bundle exec rubocop
-      - name: print steps
-        run: echo ${{ steps }}
+      - name: print linting outcome
+        if: always()
+        run: echo ${{ steps.lint.outcome }}
     
