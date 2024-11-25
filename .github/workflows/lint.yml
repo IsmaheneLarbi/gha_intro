@@ -10,5 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo $GITHUB_WORKSPACE
+      - run: echo ${{ github.workspace }}
+      - run: echo ${{ github.repository }}
+      - run: echo ${{ github.action }}
+      - run: echo ${{ github.actor }}
+      - uses: actions/setup-ruby@v1
     
