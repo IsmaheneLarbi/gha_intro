@@ -2,7 +2,7 @@ name: Linting Check
 
 on:
   pull_request:
-    types: [opened, edited, review_requested]
+    types: [opened, reopened, edited, review_requested]
   # or
   # pull_request_review:
     #types: [submitted, edited]
