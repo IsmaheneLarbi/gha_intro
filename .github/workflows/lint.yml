@@ -1,7 +1,11 @@
 name: Lint Check
 
 on:
-  push:
+  pull_request:
+    types: [review_requested]
+  # or
+  # pull_request_review:
+    #types: [submitted, edited]
     branches:
       - main
 
