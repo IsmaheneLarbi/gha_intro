@@ -15,7 +15,9 @@ jobs:
     steps:
       - run: echo ${{ github.repository }}
       - run: echo ${{ github.actor }}
+      # checks out branch that triggered workflow
       - uses: actions/checkout@v4
+      # use ruby version in .ruby_version file
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -23,7 +25,8 @@ jobs:
         id: lint
         run: bundle exec rubocop
       - name: print linting outcome
-        if: '!cancelled()'
+        # prefer always to  '!cancelled()' for logging
+        if: ${{ always() }}
         run: |
           if [ "${{ steps.lint.outcome }}" = "success" ]; then
             echo "linting successful."
