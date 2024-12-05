@@ -14,3 +14,4 @@ end
 
 meriem = Waiter.new([Date.today.to_s], 'meriem')
 puts meriem.inspect
+puts 'message added to create a new PR'
