@@ -17,11 +17,11 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: sleep 5
+      # - run: sleep 5
       - name: get conflict status
         id: mergeable
         run: |
-          if ["${{ github.event.pull_request.mergeable }}" == "true"]
+          if ["${{ github.event.pull_request.mergeable }}" == "true"]; then
             echo "Youpi, there are no conflicts!"
             exit 0
           else
