@@ -1,0 +1,38 @@
+name: Conflict check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+    branches:
+      - main
+
+jobs:
+  conflict_check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Your branch name is     ${{ github.head_ref }}
+      - run: echo You want to merge into  ${{ github.base_ref }}
+      # checks out branch that triggered workflow
+      - uses: actions/checkout@v4
+      # use ruby version in .ruby_version file
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - run: sleep 30
+      - name: get conflict status
+        id: mergeable
+        run: |
+          echo "${{ toJson(github.event.pull_request) }}"
+          # if [ "${{ github.event.pull_request.mergeable }}" = "true" ]; then
+          #   echo "Youpi, there are no conflicts!"
+          #   exit 0
+          # else
+          #   echo "There are conflicts"
+          #   exit 1
+          # fi
+    
+    
