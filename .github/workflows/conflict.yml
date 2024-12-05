@@ -7,25 +7,25 @@ on:
 
 jobs:
   conflict_check:
-  runs-on: ubuntu-latest
-  steps:
-    - run: echo Your branch name is     ${{ github.head_ref }}
-    - run: echo You want to merge into  ${{ github.base_ref }}
-    # checks out branch that triggered workflow
-    - uses: actions/checkout@v4
-    # use ruby version in .ruby_version file
-    - uses: ruby/setup-ruby@v1
-    with:
-      bundler-cache: true
-    - name: get conflict status
-      id: mergeable
-      run: |
-        if ["${{ github.event.pull_request.mergeable }}" == "true"]
-          echo "Youpi, there are no conflicts!"
-          exit 0
-        else
-          echo "There are conflicts"
-          exit 1
-        fi
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Your branch name is     ${{ github.head_ref }}
+      - run: echo You want to merge into  ${{ github.base_ref }}
+      # checks out branch that triggered workflow
+      - uses: actions/checkout@v4
+      # use ruby version in .ruby_version file
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: get conflict status
+        id: mergeable
+        run: |
+          if ["${{ github.event.pull_request.mergeable }}" == "true"]
+            echo "Youpi, there are no conflicts!"
+            exit 0
+          else
+            echo "There are conflicts"
+            exit 1
+          fi
     
     
