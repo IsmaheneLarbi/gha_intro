@@ -21,7 +21,7 @@ jobs:
       - name: get conflict status
         id: mergeable
         run: |
-          echo ${{ github.event.pull_request }}
+          echo "${{ toJson(github.event.pull_request) }}"
           # if [ "${{ github.event.pull_request.mergeable }}" = "true" ]; then
           #   echo "Youpi, there are no conflicts!"
           #   exit 0
