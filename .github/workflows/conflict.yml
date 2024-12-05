@@ -2,6 +2,11 @@ name: Conflict check
 
 on:
   pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
     branches:
       - main
 
