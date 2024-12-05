@@ -1,7 +1,8 @@
 name: Conflict check
 
 on: pull_request
-  branches: main
+  branches:
+    - main
 
 jobs:
   conflict_check:
@@ -19,8 +20,11 @@ jobs:
       id: mergeable
       run: |
         if ["${{ github.event.pull_request.mergeable }}" == "true"]
-          echo Youpi, there are no conflicts!
+          echo "Youpi, there are no conflicts!"
           exit 0
+        else
+          echo "There are conflicts"
+          exit 1
         fi
     
     
