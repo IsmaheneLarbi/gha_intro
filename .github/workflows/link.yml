@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
-      - run: ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*')
+      - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*')" >> $GITHUB_ENV
       - run: echo $ticket
       - run: echo "is it mergeable ? ${{ github.event.pull_request.mergeable_state }}"
   
