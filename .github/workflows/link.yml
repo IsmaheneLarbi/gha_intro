@@ -9,4 +9,5 @@ jobs:
   get_branch_name:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.pull_request.head.ref }}  
+      - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
+      - run: echo "is it mergeable ? ${{ github.event.pull_request.mergeable }}"
