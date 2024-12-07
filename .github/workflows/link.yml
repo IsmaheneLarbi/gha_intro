@@ -11,7 +11,7 @@ jobs:
     steps:
       - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
       # isolate ticket number and capitalize it
-      - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+      - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
       - run: echo $ticket
       - run: echo "is it mergeable ? ${{ github.event.pull_request.mergeable_state }}"
   
