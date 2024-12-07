@@ -10,4 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
-      - run: echo "is it mergeable ? ${{ github.event.pull_request.mergeable }}"
+      - run: echo "is it mergeable ? ${{ github.event.pull_request.mergeable_state }}"
+  
+  print_pr_body:
+    runs-on: ubuntu-latest
+    needs:
+      - get_branch_name
+    steps:
+      - run: echo "your pr's body ${{ github.event.pull_request.body }}"
