@@ -21,3 +21,4 @@ jobs:
       - get_branch_name
     steps:
       - run: echo "your pr's body ${{ github.event.pull_request.body }}"
+      - run: echo "${{ github.event.pull_request.body }}" | grep "weforum.jira.com"
