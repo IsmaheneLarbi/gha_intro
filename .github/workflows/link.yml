@@ -24,4 +24,4 @@ jobs:
       # - run: echo "link=$(echo "${{ github.event.pull_request.body }}" | grep "weforum.jira.com")" >> $GITHUB_ENV
       # - run: echo $link
       #- run: new_link=$(echo "$link" | sed 's/)/'$ticket')/' | sed 's/]/'$ticket']/')
-      - run: echo "${{ github.event.pull_request.body }}" | sed "s|browse/|&$ticket|" | sed "s|](|$ticket](|"
+      - run: echo "$(echo "${{ github.event.pull_request.body }}" | sed "s|browse/|&$ticket|" | sed "s|](|$ticket](|")"
