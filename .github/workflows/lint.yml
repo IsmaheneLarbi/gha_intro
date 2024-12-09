@@ -1,8 +1,8 @@
-name: Lint Check
+name: Linting Check
 
 on:
   pull_request:
-    types: [review_requested]
+    types: [opened, reopened, edited, review_requested]
   # or
   # pull_request_review:
     #types: [submitted, edited]
