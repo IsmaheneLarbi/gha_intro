@@ -13,7 +13,9 @@ jobs:
       # isolate ticket number and capitalize it
       - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
       - run: echo $ticket
-      - run: echo "is it mergeable ? ${{ github.event.pull_request.mergeable_state }}"
+      - run: gh pr view ${{ github.event.pull_request.number }} --json mergeStateStatus --jq '.mergeStateStatus'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
   print_pr_body:
     runs-on: ubuntu-latest
@@ -24,4 +26,8 @@ jobs:
       # - run: echo "link=$(echo "${{ github.event.pull_request.body }}" | grep "weforum.jira.com")" >> $GITHUB_ENV
       # - run: echo $link
       #- run: new_link=$(echo "$link" | sed 's/)/'$ticket')/' | sed 's/]/'$ticket']/')
-      - run: echo "$(echo "${{ github.event.pull_request.body }}" | sed "s|browse/|&$ticket|" | sed "s|](|$ticket](|")"
+      # - run: echo "pr_body=${{ github.event.pull_request.body }}"  >> $GITHUB_ENV
+      # - run: echo -e "$pr_body" | sed "s|browse/|&$ticket|" | sed "s|](|$ticket](|"
+      - run: gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body' | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
