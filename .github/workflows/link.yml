@@ -9,8 +9,8 @@ jobs:
   get_branch_name:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: authenticate
-        uses: actions/checkout@v4
         run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
       - run: echo "current_branch=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
       - run: echo $current_branch
