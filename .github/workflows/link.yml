@@ -8,6 +8,7 @@ on:
 jobs:
   get_branch_name:
     runs-on: ubuntu-latest
+    uses: actions/checkout@v4
     steps:
       - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
       # isolate ticket number and capitalize it
