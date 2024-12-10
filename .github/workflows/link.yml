@@ -18,6 +18,9 @@ jobs:
       - name: get ticket ref
         run: |
           echo $current_branch
+          echo $current_branch | grep -oiE 'fws[- ][0-9]*' 
+          echo $current_branch | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' 
+          echo $current_branch | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')
           echo "ticket=$(echo $current_branch | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
           echo $ticket
       # print body
