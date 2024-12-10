@@ -13,9 +13,10 @@ jobs:
       # isolate ticket number and capitalize it
       - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
       - run: echo $ticket
-      - run: gh pr view ${{ github.event.pull_request.number }} --json mergeStateStatus --jq '.mergeStateStatus'
+      - run: gh auth login --with-token <<< "$GH_TOKEN"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: gh pr view --json mergeable --jq '.mergeable'
   
   print_pr_body:
     runs-on: ubuntu-latest
