@@ -31,5 +31,5 @@ jobs:
       # - run: echo "pr_body=${{ github.event.pull_request.body }}"  >> $GITHUB_ENV
       # - run: echo -e "$pr_body" | sed "s|browse/|&$ticket|" | sed "s|](|$ticket](|"
       - run: gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body' | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|"
-        # env:
-        #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
