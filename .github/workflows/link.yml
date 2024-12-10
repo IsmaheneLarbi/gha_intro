@@ -6,20 +6,32 @@ on:
       - main
 
 jobs:
-  # get_branch_name:
-  edit_pr_body:
+  get_branch_name:
     runs-on: ubuntu-latest
-    steps:
-      - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
-      # isolate ticket number and capitalize it
-      - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
-      - run: echo $ticket
-      - name: turn into git repo
-        uses: actions/checkout@v4
-      - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-      # error : could not determine current branch: failed to run git: not on any branch
-      - run: gh pr view ${{github.event.pull_request.head.ref}} --json mergeable --jq .mergeable
-      - run: gh pr edit ${{ github.event.pull_request.head.ref }} --body | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|"
+    - run: 
+      uses: actions/checkout@v4
+    - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+    - run: echo "current_branch=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
+    - run: echo $current_branch
+      # print body
+      # run: echo "$(gh pr view fws-123-link-on-pr --json body --jq '.body')"
+      # set var in sh
+      #  pouf=$(gh pr view fws-123-link-on-pr --json body --jq '.body')
+      # echo "$pouf"
+      # gh pr view fws-123-link-on-pr --json body --jq '.body'
+  # edit_pr_body:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
+  #     # isolate ticket number and capitalize it
+  #     - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+  #     - run: echo $ticket
+  #     - name: turn into git repo
+  #       uses: actions/checkout@v4
+  #     - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+  #     # error : could not determine current branch: failed to run git: not on any branch
+  #     - run: gh pr view ${{github.event.pull_request.head.ref}} --json mergeable --jq .mergeable
+  #     - run: gh pr edit ${{ github.event.pull_request.head.ref }} --body "$(echo $(gh pr view ${{ github.event.pull_request.head.ref }} --json '.body' --jq '.body') | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|")"
   
   # print_pr_body:
   #   runs-on: ubuntu-latest
