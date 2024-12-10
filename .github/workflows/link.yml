@@ -14,6 +14,11 @@ jobs:
         run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
       - run: echo "current_branch=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
       - run: echo $current_branch
+
+      - name: get ticket ref
+        run: |
+        echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+        echo "$ticket"
       # print body
       # run: echo "$(gh pr view fws-123-link-on-pr --json body --jq '.body')"
       # set var in sh
