@@ -18,7 +18,7 @@ jobs:
       - name: get ticket ref
         run: |
           echo $current_branch
-          echo "ticket=$(echo '$current_branch' | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+          echo "ticket=$(echo $current_branch | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
           echo $ticket
       # print body
       # run: echo "$(gh pr view fws-123-link-on-pr --json body --jq '.body')"
