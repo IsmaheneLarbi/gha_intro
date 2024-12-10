@@ -16,7 +16,7 @@ jobs:
       - name: turn into git repo
         uses: actions/checkout@v4
       - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-      - run: gh pr view --json mergeable --jq '.mergeable'
+      - run: gh pr view --json mergeable --jq '.mergeable' '.id' "${{ github.event.pull_request.id}}"
   
   print_pr_body:
     runs-on: ubuntu-latest
