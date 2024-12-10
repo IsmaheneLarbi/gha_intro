@@ -8,10 +8,12 @@ on:
 jobs:
   get_branch_name:
     runs-on: ubuntu-latest
-    - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-      uses: actions/checkout@v4
-    - run: echo "current_branch=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
-    - run: echo $current_branch
+    steps:
+      - name: authenticate
+        uses: actions/checkout@v4
+        run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+      - run: echo "current_branch=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
+      - run: echo $current_branch
       # print body
       # run: echo "$(gh pr view fws-123-link-on-pr --json body --jq '.body')"
       # set var in sh
