@@ -8,8 +8,8 @@ on:
 jobs:
   get_branch_name:
     runs-on: ubuntu-latest
-      uses: actions/checkout@v4
     - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+      uses: actions/checkout@v4
     - run: echo "current_branch=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
     - run: echo $current_branch
       # print body
