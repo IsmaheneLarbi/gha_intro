@@ -19,7 +19,7 @@ jobs:
       - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
       # error : could not determine current branch: failed to run git: not on any branch
       - run: gh pr view ${{github.event.pull_request.head.ref}} --json mergeable --jq .mergeable
-      - run: gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body' | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|"
+      - run: gh pr edit ${{ github.event.pull_request.number }} --json body --jq '.body' | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|"
   
   # print_pr_body:
   #   runs-on: ubuntu-latest
