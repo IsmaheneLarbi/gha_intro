@@ -23,11 +23,7 @@ jobs:
       - name: get pr body
         id: get_pr_body
         run: |
-          {
-            echo 'pr_body<<EOF'
-            ${{ github.event.pull_request.body }}
-            echo EOF
-          } >> "$GITHUB_ENV"
+          cat $(pr_body="${{ github.event.pull_request.body }}") >> "$GITHUB_ENV"
       - run: |
           echo $pr_body
       # gh pr edit $current_branch --body "$(echo $pr_body | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|")" 
