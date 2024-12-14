@@ -1,0 +1,64 @@
+name: Jira ticket inserting
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  get_branch_name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: authenticate
+        run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+      - run: echo "current_branch=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
+      - run: echo $current_branch
+
+      - name: get ticket ref
+        run: |
+          echo "ticket=$(echo $current_branch | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')"  >> $GITHUB_ENV
+      
+      - run: echo $ticket
+      # - name: get pr body
+      #   id: get_pr_body
+      #   run: |
+      #     cat $(pr_body="${{ github.event.pull_request.body }}") >> "$GITHUB_ENV"
+      # - run: |
+      #     echo $pr_body
+      - run: gh pr edit "$current_branch" --body "$(echo "${{ github.event.pull_request.body }}" | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|")" 
+      # - run: echo gh pr view $ 
+      # print body
+      # run: echo "$(gh pr view fws-123-link-on-pr --json body --jq '.body')"
+      # set var in sh
+      #  pouf=$(gh pr view fws-123-link-on-pr --json body --jq '.body')
+      # echo "$pouf"
+      # gh pr view fws-123-link-on-pr --json body --jq '.body'
+  # edit_pr_body:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo "the branch to be merged ${{ github.event.pull_request.head.ref }}"
+  #     # isolate ticket number and capitalize it
+  #     - run: echo "ticket=$(echo ${{ github.event.pull_request.head.ref }} | grep -oiE 'fws[- ][0-9]*' | sed 's/ /-/' | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+  #     - run: echo $ticket
+  #     - name: turn into git repo
+  #       uses: actions/checkout@v4
+  #     - run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+  #     # error : could not determine current branch: failed to run git: not on any branch
+  #     - run: gh pr view ${{github.event.pull_request.head.ref}} --json mergeable --jq .mergeable
+  #     - run: gh pr edit ${{ github.event.pull_request.head.ref }} --body "$(echo $(gh pr view ${{ github.event.pull_request.head.ref }} --json '.body' --jq '.body') | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|")"
+  
+  # print_pr_body:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - get_branch_name
+  #   steps:
+      # - run: echo "your pr's body ${{ github.event.pull_request.body }}"
+      # - run: echo "link=$(echo "${{ github.event.pull_request.body }}" | grep "weforum.jira.com")" >> $GITHUB_ENV
+      # - run: echo $link
+      #- run: new_link=$(echo "$link" | sed 's/)/'$ticket')/' | sed 's/]/'$ticket']/')
+      # - run: echo "pr_body=${{ github.event.pull_request.body }}"  >> $GITHUB_ENV
+      # - run: echo -e "$pr_body" | sed "s|browse/|&$ticket|" | sed "s|](|$ticket](|"
+      # - run: gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body' | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|"
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
