@@ -21,10 +21,10 @@ jobs:
       
       - run: echo $ticket
       - run: |
-          echo "pr_body="${{ github.event.pull_request.body }}""  >> $GITHUB_ENV
+          echo -e "pr_body=${{ github.event.pull_request.body }}"  >> $GITHUB_ENV
       - run: |
           echo $pr_body
-          # gh pr edit $current_branch --body "$(echo $pr_body | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|")" 
+      # gh pr edit $current_branch --body "$(echo $pr_body | sed "s|browse/|&$ticket|"  | sed "s|](|$ticket](|")" 
       # - run: echo gh pr view $ 
       # print body
       # run: echo "$(gh pr view fws-123-link-on-pr --json body --jq '.body')"
